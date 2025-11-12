@@ -1,28 +1,98 @@
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8"><title th:text="${titulo}">Producto</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="p-4">
-<a href="/productos" class="btn btn-link">&larr; Volver</a>
-<h1 class="h4 mb-3" th:text="${titulo}">Producto</h1>
+    <meta charset="utf-8">
+    <title th:text="${titulo}">Producto</title>
 
-<form th:action="@{/productos/guardar}" th:object="${producto}" method="post" style="max-width:480px">
-  <input type="hidden" th:field="*{id}">
-  <div class="mb-3">
-    <label class="form-label">Nombre</label>
-    <input class="form-control" th:field="*{nombre}" required>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Precio</label>
-    <input class="form-control" type="number" step="0.01" th:field="*{precio}" required>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Cantidad</label>
-    <input class="form-control" type="number" th:field="*{cantidad}" required>
-  </div>
-  <button class="btn btn-primary">Guardar</button>
-</form>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+
+            <!-- enlace volver -->
+            <a th:href="@{/productos}"
+               class="d-inline-flex align-items-center mb-3 text-decoration-none">
+                &larr; Volver al listado
+            </a>
+
+            <!-- tarjeta del formulario -->
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h5 mb-0" th:text="${titulo}">Nuevo producto</h1>
+                </div>
+
+                <div class="card-body">
+                    <form th:action="@{/productos/guardar}"
+                          th:object="${producto}"
+                          method="post">
+
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Nombre</label>
+                            <input class="form-control"
+                                   th:field="*{nombre}"
+                                   placeholder="Ej: Proteína vainilla 1kg"
+                                   required>
+                            <div class="form-text">
+                                Escribe un nombre fácil de identificar.
+                            </div>
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Precio</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input class="form-control"
+                                       type="number"
+                                       step="0.01"
+                                       min="0"
+                                       th:field="*{precio}"
+                                       placeholder="0.00"
+                                       required>
+                            </div>
+                            <div class="form-text">
+                                Precio unitario del producto.
+                            </div>
+                        </div>
+
+                        <!-- Cantidad -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Cantidad</label>
+                            <input class="form-control"
+                                   type="number"
+                                   min="0"
+                                   step="1"
+                                   th:field="*{cantidad}"
+                                   required>
+                            <div class="form-text">
+                                Cantidad actual en inventario.
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/productos}" class="btn btn-outline-secondary">
+                                Cancelar
+                            </a>
+                            <button class="btn btn-primary px-4" type="submit">
+                                Guardar
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
